@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require 'tflat'
+
+Tflat::Terraform.new(args: ARGV, directory: '.').run!
