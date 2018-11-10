@@ -2,7 +2,7 @@
 
 Aren't you tired of copy and pasting?
 
-I love Terraform, but HCL really gets in the way sometimes.
+I love [Terraform](https://www.terraform.io/), but HCL really gets in the way sometimes.
 
 How many times you wish you could just write a simple IF or CASE statement inside a .tf file? Any attempt of having minimal flow control with HCL results in a massive oneliner mess. Sometimes it feels like writing PERL one-liners. Hard to read equals hard to debug.
 
