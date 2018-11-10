@@ -1,10 +1,10 @@
-# TFlat
+# TFlat = Terraform + Subdirectories + Ruby (ERB)
 
 Aren't you tired of copy and pasting?
 
 I love [Terraform](https://www.terraform.io/), but HCL really gets in the way sometimes.
 
-How many times you wish you could just write a simple IF or CASE statement inside a .tf file? Any attempt of having minimal flow control with HCL results in a massive oneliner mess. Sometimes it feels like writing PERL one-liners. Hard to read equals hard to debug.
+How many times you wish you could just write a simple IF or CASE statement inside a `.tf` file? Any attempt of having minimal flow control with HCL results in a massive oneliner mess. Sometimes it feels like writing PERL one-liners. Hard to read equals hard to debug.
 
 Also, you can't use subfolders with Terraform, so you often end up at one of the three scenarios below:
 - You have a few `.tf` files with a lot of code in it. Ugly and not organized.
@@ -14,6 +14,11 @@ Also, you can't use subfolders with Terraform, so you often end up at one of the
 TFlat does 2 things to solve this problem:
 * Separate your Terraform code in subdirectories.
 * It allows you to write Ruby code in `.tf` files using ERB templates. Hurray!
+
+Jump to:
+* [Installation](#installation)
+* [Usage](#usage)
+
 
 ## How does TFlat make Terraform read subdirectories?
 It doesn't. This is what happens when you run it:
@@ -98,7 +103,9 @@ template = "${file("<%= f('files/userdata.tpl') %>")}"
 It is up to you to choose what you like. Try both and look inside `.tflat/main.tf` to see the difference between the two ways.
 
 ## Installation
+1. [Download and install Terraform](https://www.terraform.io/intro/getting-started/install.html). Make sure the `terraform` command is in your **$PATH**.
 
+2. Install the gem:
 ```
 $ gem install tflat
 ```
