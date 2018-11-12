@@ -2,6 +2,7 @@ require "tflat/version"
 require 'erb'
 require 'fileutils'
 require 'ptools'
+require 'json'
 
 module Tflat
   class Terraform
@@ -19,6 +20,7 @@ module Tflat
         return
       end
       setup
+      read_variables
       print "- [tflat] Generating files..."
       flatten_directories
       parse_erb
@@ -33,6 +35,11 @@ module Tflat
         next unless File.file?(entry)
         FileUtils.rm_f entry
       end
+    end
+
+    def read_variables
+      return unless File.file?('terraform.tfvars.json')
+      @variables = JSON.parse(File.read 'terraform.tfvars.json')
     end
 
     def flatten_directories

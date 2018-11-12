@@ -122,6 +122,27 @@ tflat plan
 ```
 That's it!
 
+## Using TFVARS inside the ERB template
+If you store your variables in JSON format inside a file named `terraform.tfvars.json`, those variables will be automatically available for you as a HASH named `@variables` (with string keys). For example:
+
+```
+# terraform.tfvars.json
+{
+  "app_domain": "example.com"
+}
+
+# files/swarm-stack.yml
+version: "3.7"
+services:
+  ...
+  myapp:
+    ...
+    environment:
+      - DOMAIN_NAME=<%= @variables['app_domain'] %>
+...
+```
+
+That way you don't have to deal with Terraform templates!
 
 ## Contributing
 
