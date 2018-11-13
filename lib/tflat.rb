@@ -3,6 +3,7 @@ require 'erb'
 require 'fileutils'
 require 'ptools'
 require 'json'
+require 'digest'
 
 module Tflat
   class Terraform
@@ -67,8 +68,12 @@ module Tflat
     end
 
     def file(file)
-      f = ".tflat/#{f(file)}"
-      File.read(f).inspect[1...-1]
+      render(file).inspect[1...-1]
+    end
+
+    def file_sha256(ff)
+      f = file(ff)
+      Digest::SHA256.hexdigest(f)
     end
 
     def render(file)

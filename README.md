@@ -102,6 +102,8 @@ template = "${file("<%= f('files/userdata.tpl') %>")}"
 
 It is up to you to choose what you like. Try both and look inside `.tflat/main.tf` to see the difference between the two ways.
 
+> You can also use `<%= file_sha256('path/to_file') %>` to return its SHA256.
+
 ## Installation
 1. [Download and install Terraform](https://www.terraform.io/intro/getting-started/install.html). Make sure the `terraform` command is in your **$PATH**.
 
