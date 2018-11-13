@@ -88,7 +88,7 @@ resource "aws_instance" "web" {
 # ...
 ```
 
-The line `template = "${file("files/userdata.tpl")}"` has to be written the in one of the following ways to work with TFlat:
+The line `template = "${file("files/userdata.tpl")}"` has to be written in one of the following ways to work with TFlat:
 
 ```
 # Let Ruby load the file content using the 'file' helper method (easier to read)
