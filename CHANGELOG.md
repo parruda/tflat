@@ -1,7 +1,12 @@
 # Changelog
 
-## 0.1.4 - Nov 17 2018
+## 0.1.6 - Nov 17 2018
+- Folders or files with the character '#' on their names will be ignored. You can use that to comment several files at once by commenting their folder.
+
+## 0.1.5 - Nov 17 2018
 - More verbose output to make it easier to catch ERB errors.
+
+## 0.1.4 - Skipped
 
 ## 0.1.3 - Nov 12 2018
 - Added helper method `file_sha256(file)` to return the SHA256 of `file`'s content. This is useful for `null_resource` triggers.

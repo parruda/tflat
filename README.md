@@ -146,6 +146,25 @@ services:
 
 That way you don't have to deal with Terraform templates!
 
+## Ignoring certain folders
+If you want TFlat to ignore a file or folder, just add a '#' to its name. This is useful when you want to destroy a chunk of infrastructure really quick, or when you don't want to apply something that you have been working on yet.
+
+For example:
+
+```
+|_ config
+  |_ providers.tf
+  |_ state.tf
+|_ #ec2    <--- This folder and its contents will be ignored by TFlat
+  |_ files
+    |_ user_data.sh
+  |_ instances.tf
+  |_ keypairs.tf
+|_ #resources.tf  <---- This file will be ignored by TFlat
+|_ outputs.tf
+|_ variables.tf
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/parruda/tflat. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.

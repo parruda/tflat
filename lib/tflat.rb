@@ -45,6 +45,7 @@ module Tflat
 
     def flatten_directories
       all_files.each do |entry|
+        next if entry =~ /#/
         new_name = entry.sub(/^#{directory}\//,'').gsub('/', '#')
         if new_name =~ /^#/ # Skip files/directories that start with a hash sign
           puts "- [tflat] Skipping: #{entry}"
