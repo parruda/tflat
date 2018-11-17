@@ -22,7 +22,7 @@ module Tflat
       end
       setup
       read_variables
-      print "- [tflat] Generating files..."
+      puts "- [tflat] Generating files"
       flatten_directories
       parse_erb
       puts " done!"
@@ -58,7 +58,14 @@ module Tflat
       Dir.glob(".tflat/*").each do |entry|
         next unless File.file?(entry)
         next if File.binary?(entry)
-        rendered = render(entry)
+        puts "- [tflat] -> #{entry}"
+        begin
+          rendered = render(entry)
+        rescue Exception => e
+          puts "- [tflat] ERROR: Could not parse ERB on file #{entry}"
+          puts e.full_message
+          exit 1
+        end
         File.write(entry, rendered)
       end
     end
