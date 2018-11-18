@@ -146,6 +146,8 @@ services:
 
 That way you don't have to deal with Terraform templates!
 
+**NOTE:** Environment variables like `TF_VAR_*` are also accessible in Ruby, and will take precedence if the same value is set in the JSON variables file.
+
 ## Ignoring certain folders
 If you want TFlat to ignore a file or folder, just add a '#' to its name. This is useful when you want to destroy a chunk of infrastructure really quick, or when you don't want to apply something that you have been working on yet.
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.7 - Nov 17 2018
+- Environment variables `TF_VAR_*` are also loaded by Ruby and will overwrite a value set in the JSON file.
+
 ## 0.1.6 - Nov 17 2018
 - Folders or files with the character '#' on their names will be ignored. You can use that to comment several files at once by commenting their folder.
 

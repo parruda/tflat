@@ -41,6 +41,11 @@ module Tflat
     def read_variables
       return unless File.file?('terraform.tfvars.json')
       @variables = JSON.parse(File.read 'terraform.tfvars.json')
+      # Env vars TF_VAR_* will overwrite anything set on the JSON file.
+      ENV.select{|k,v| k =~ /^TF_VAR_.+$/}.each do |k,v|
+        name = k.sub('TF_VAR_', '')
+        @variables[name] = v
+      end
     end
 
     def flatten_directories
