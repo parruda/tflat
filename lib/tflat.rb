@@ -9,30 +9,40 @@ module Tflat
   class Terraform
     attr_accessor :destination, :all_files, :args, :directory
     def initialize(args:, directory: '.')
+      @workspace = ENV['TFLAT_WORKSPACE']
       @args = args.join(' ')
       @directory = directory
-      @all_files = Dir.glob("#{directory}/**/*").select{|e| File.file?(e) && !e.match(/^\.tflat\/.+$/)}
-      @destination = "#{directory}/.tflat"
+      @all_files = Dir.glob("#{directory}/**/*").select{|e| File.file?(e) && !e.match(/^\.tflat.*\/.+$/)}
+      if @workspace
+        @destination = "#{directory}/.tflat.#{@workspace}"
+        @tag = "[tflat | #{@workspace}]"
+        @tflat_folder = ".tflat.#{@workspace}"
+      else
+        @destination = "#{directory}/.tflat"
+        @tag = "[tflat]"
+        @tflat_folder = ".tflat"
+      end
+
     end
     def run!
       if args.empty?
         puts `terraform`
-        puts "\n\n- [tflat] Notice: You must run tflat with terraform arguments.\n\n"
+        puts "\n\n- #{@tag} Notice: You must run tflat with terraform arguments.\n\n"
         return
       end
       setup
       read_variables
-      puts "- [tflat] Generating files"
+      puts "- #{@tag} Generating files"
       flatten_directories
       parse_erb
       puts " done!"
-      puts "- [tflat] Running: terraform #{args}"
+      puts "- #{@tag} Running: terraform #{args}"
       execute
     end
 
     def setup
       FileUtils.mkdir_p(destination)
-      Dir.glob('.tflat/*').each do |entry|
+      Dir.glob("#{@tflat_folder}/*").each do |entry|
         next unless File.file?(entry)
         FileUtils.rm_f entry
       end
@@ -53,22 +63,22 @@ module Tflat
         next if entry =~ /#/
         new_name = entry.sub(/^#{directory}\//,'').gsub('/', '#')
         if new_name =~ /^#/ # Skip files/directories that start with a hash sign
-          puts "- [tflat] Skipping: #{entry}"
+          puts "- #{@tag} Skipping: #{entry}"
           next
         end
-        FileUtils.cp(entry, ".tflat/#{new_name}")
+        FileUtils.cp(entry, "#{@tflat_folder}/#{new_name}")
       end
     end
 
     def parse_erb
-      Dir.glob(".tflat/*").each do |entry|
+      Dir.glob("#{@tflat_folder}/*").each do |entry|
         next unless File.file?(entry)
         next if File.binary?(entry)
-        puts "- [tflat] -> #{entry}"
+        puts "- #{@tag} -> #{entry}"
         begin
           rendered = render(entry)
         rescue Exception => e
-          puts "- [tflat] ERROR: Could not parse ERB on file #{entry}"
+          puts "- #{@tag} ERROR: Could not parse ERB on file #{entry}"
           puts e.full_message
           exit 1
         end
@@ -95,7 +105,7 @@ module Tflat
     end
 
     def execute
-      exec "cd .tflat && terraform #{args}"
+      exec "cd #{@tflat_folder} && terraform #{args}"
     end
   end
 end

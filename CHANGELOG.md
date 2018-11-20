@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.1.7 - Nov 17 2018
+## 0.1.8 - Unreleased
+- Set environment variable TFLAT_WORKSPACE to have the `.tflat` folder have a suffix. Useful for running same code on different states, for example.
+
+
+## 0.1.7 - Nov 18 2018
 - Environment variables `TF_VAR_*` are also loaded by Ruby and will overwrite a value set in the JSON file.
 
 ## 0.1.6 - Nov 17 2018
