@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.8 - Unreleased
+## 0.1.8 - Dec 5 2018
 - Set environment variable TFLAT_WORKSPACE to have the `.tflat` folder have a suffix. Useful for running same code on different states, for example.
 
 

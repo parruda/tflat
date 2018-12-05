@@ -56,6 +56,43 @@ Then it will `cd` into `.tflat` and run `terraform` with the arguments you passe
 
 **IMPORTANT:** The `.terraform` folder will live at `.tflat/.terraform`, so make sure you don't delete that folder if you are storing the terraform state locally!
 
+### TFLAT Workspaces
+Say you want to run the same terraform code against multiple environments and cloud regions.
+
+You can do that by setting the environment variable TFLAT_WORKSPACE in your shell, plus any other `TF_VAR_`'s that are required to achieve what you want.
+
+For example, say I have some terraform code setup with remote state using S3 + DynamoDB as backend. I want to run it against the `staging` environment on `ca-central-1`.
+
+Here is my `state.tf`:
+```
+terraform {
+  backend "s3" {
+    encrypt        = true
+    bucket         = "my-s3-bucket"
+    region         = "ca-central-1"
+    dynamodb_table = "my-dynamo-table"
+    key            = "<%= ENV['TFLAT_WORKSPACE'] %>/terraform.tfstate"
+  }
+}
+```
+
+And here is `providers.tf`:
+```
+variable "region" {}
+provider "aws" {
+  version = "~> 1.50"
+  region  = "${var.region}"
+}
+```
+
+And here is how I would set my shell environment:
+```
+export TF_VAR_region=ca-central-1
+export TFLAT_WORKSPACE=staging/ca-central-1
+```
+
+When you run `tflat init`, you will notice that the `.tflat` folder is really `.tflat.staging/ca-central-1`, and your state is in the key `staging/ca-central-1/terraform.tfstate` inside of S3!
+
 There's only one more thing you have to pay attention to: handling file references.
 
 ### Handling file references
