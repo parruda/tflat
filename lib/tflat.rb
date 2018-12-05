@@ -71,7 +71,7 @@ module Tflat
     end
 
     def parse_erb
-      Dir.glob("#{@tflat_folder}/*").each do |entry|
+      Dir.glob("#{@tflat_folder}/*").sort.each do |entry|
         next unless File.file?(entry)
         next if File.binary?(entry)
         puts "- #{@tag} -> #{entry}"
