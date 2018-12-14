@@ -79,7 +79,7 @@ module Tflat
           rendered = render(entry)
         rescue Exception => e
           puts "- #{@tag} ERROR: Could not parse ERB on file #{entry}"
-          puts e.full_message
+          puts e.message
           exit 1
         end
         File.write(entry, rendered)

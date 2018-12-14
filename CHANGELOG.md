@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.1.9 - Unreleased
+## 0.1.9 - Dec 14 2018
 - Sort files by name before rendering ERB. That allows you to add files like `_globals/variables.tf` with some custom ruby code that will run before parsing anything else.
+- Fix bug with exception handling
 
 ## 0.1.8 - Dec 5 2018
 - Set environment variable TFLAT_WORKSPACE to have the `.tflat` folder have a suffix. Useful for running same code on different states, for example.
